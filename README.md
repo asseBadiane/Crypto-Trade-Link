@@ -1,11 +1,7 @@
 # Projet CryptoTraderLink
+CryptoTraderLink serves as a dynamic platform facilitating connections between Bitcoin sellers and buyers, aiming to simplify the cryptocurrency exchange process. Leveraging the cutting-edge MERN stack (MongoDB, Express.js, React, Node.js), our user-friendly web application allows individuals to effortlessly create profiles, showcase services, engage in messaging, and provide feedback.
 
-CryptoTraderLink est une plateforme de mise en relation entre vendeurs et acheteurs de Bitcoin, 
-conçue pour simplifier les échanges de crypto-monnaie. Cette application web moderne repose sur 
-la pile MERN (MongoDB, Express.js, React, Node.js) et offre une interface conviviale pour 
-permettre aux utilisateurs de créer des profils, de publier leurs services, d'échanger des messages
-et de laisser des commentaires. La sécurité des transactions et des données 
-personnelles est une priorité, tout comme la conformité légale.
+While we currently do not facilitate transactions on the site, CryptoTraderLink remains committed to ensuring the utmost security for user data. Our dedication to compliance with legal standards guarantees a trustworthy environment, setting the stage for a seamless and secure experience as we explore future developments. Join us on CryptoTraderLink—a hub for cryptocurrency enthusiasts seeking a user-focused and compliant space.
 
 # LOGO
 <p align="center">
