@@ -87,7 +87,7 @@ function SignIn() {
                     />
 
                     <div className="mb-12 pb-1 pt-1 text-center">
-                      <button
+                      {/* <button
                         style={{
                           background:
                             "linear-gradient(to right, #706c0c, #181702, #706c0c )",
@@ -103,6 +103,18 @@ function SignIn() {
                           {" "}
                           {loading ? <Spinner /> : "Sign In"}
                         </p>
+                      </button> */}
+                      <button className="bg-slate-950  text-white w-full mt-3 p-2 rounded-lg text-center uppercase hover:bg-slate-800 ">
+                        {loading ? (
+                          <p className="flex justify-center items-center gap-2 cursor-wait">
+                            <Spinner />
+                            <span className="text-slate-200 lowercase">
+                              Processing...
+                            </span>
+                          </p>
+                        ) : (
+                          "Sign In"
+                        )}
                       </button>
                       <OAuth />
 
