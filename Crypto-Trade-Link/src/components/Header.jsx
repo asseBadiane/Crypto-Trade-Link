@@ -16,7 +16,7 @@ import { GiTireIronCross } from "react-icons/gi";
 
 import { useEffect, useState } from "react";
 
-import Logo from "../assets/logo.png";
+import Logo from "../assets/logoc.png";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -74,7 +74,7 @@ function Header() {
         variant="small"
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-bold">
-        <Link to="/offers" className="flex items-center text-slate-100">
+        <Link to="/traders" className="flex items-center text-slate-100">
           <BsCurrencyBitcoin size={16} className="mr-1 h-16  text-slate-400" />{" "}
           Traders
         </Link>
@@ -96,10 +96,10 @@ function Header() {
       <div className=" mx-auto flex flex-wrap items-center justify-between text-slate-100">
         <h1
           href="#"
-          className="mr-4 flex flex-wrap items-center cursor-pointer  font-bold">
+          className="flex flex-wrap items-center cursor-pointer  font-bold">
           <div className="h-16 ">
             <img
-              className="rounded-full object-cover shadow-sm h-full"
+              className="rounded-full object-cover mt-2 shadow-sm h-full"
               src={Logo}
             />
           </div>
@@ -127,11 +127,11 @@ function Header() {
         </div>
         <IconButton
           variant="text"
-          className="ml-auto text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+          className="ml-auto mb-7 mx-2  text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
           ripple={false}
           onClick={() => setOpenNav(!openNav)}>
           {openNav ? (
-            <GiTireIronCross size={30} className="text-slate-100 " />
+            <GiTireIronCross size={20} className="text-slate-100 " />
           ) : (
             <AiOutlineMenu size={30} className="text-slate-100 " />
           )}
