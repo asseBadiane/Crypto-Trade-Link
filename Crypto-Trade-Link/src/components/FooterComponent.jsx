@@ -14,7 +14,7 @@ import {
   BsTwitter,
 } from "react-icons/bs";
 
-function Component() {
+function FooterComponent() {
   return (
     <Footer bgDark>
       <div className="w-full">
@@ -55,4 +55,4 @@ function Component() {
   );
 }
 
-export default Component;
+export default FooterComponent;

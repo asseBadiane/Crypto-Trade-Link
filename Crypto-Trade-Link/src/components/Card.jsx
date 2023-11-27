@@ -5,12 +5,12 @@ function CardComponent() {
   return (
     <>
       <div className="grid md:grid-cols-4 items-center justify-center mb-4">
-        <div className="message mb-4 mr-8">
+        <div className="best-sellers mb-4 mr-8 m-4 p-4">
           <div className="flex flex-wrap items-center justify-between mb-4">
             <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
               The pro-sellers
             </h2>
-            <a
+            <a 
               href="#"
               className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
               View all
