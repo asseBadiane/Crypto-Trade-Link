@@ -28,10 +28,10 @@ app.use("/api/user", user);
 app.use("/api/auth", auth);
 
 const _dirname = path.resolve();
-app.use(express.static(path.join(_dirname, "Crypto-Trade-Link/dist")));
+app.use(express.static(path.join(_dirname, "frontend/dist")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(_dirname, "Crypto-Trade-Link", "dist", "index.html"));
+  res.sendFile(path.join(_dirname, "frontend", "dist", "index.html"));
 });
 
 

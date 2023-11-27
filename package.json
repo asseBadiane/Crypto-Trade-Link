@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node api/index.js",
     "dev": "nodemon api/index.js",
-    "build": "npm install && npm install --prefix Crypto-Trade-Link && npm run build --prefix Crypto-Trade-Link"
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
