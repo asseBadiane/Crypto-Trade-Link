@@ -5,7 +5,7 @@ While we currently do not facilitate transactions on the site, CryptoTraderLink 
 
 # LOGO
 <p align="center">
-<img src="./Crypto-Trade-Link/src/assets/crypto-trade-link.png" width="500" alt="accessibility text">
+<img src="./frontend/src/assets/crypto-trade-link.png" width="500" alt="accessibility text">
 </p>
 
 # Features
@@ -52,7 +52,7 @@ Create a folder and navigate inside:
 - Navigate inside:
 
 ```bash
-  cd Crypto-Trade-Link
+  cd frontend
 ```
 - Install dependencies:
 
