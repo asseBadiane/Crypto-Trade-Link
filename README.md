@@ -36,6 +36,17 @@ Create a folder and navigate inside:
 ```bash
   cd Crypto-Trade-Link
 ```
+- click here to create your MongoDB Atlas account:  https://www.mongodb.com/cloud/atlas/register
+- Create a file .env: 
+```bash
+  touch .env  
+```
+-In the file .env Add MongoDB address Database and JWT_SECRET
+
+```bash
+  cat >  MONGO="Your address Database access" 
+        JWT_SECRET="your string secret for jsonwebtoken"
+```
 - Install dependencies: 
 
 ```bash
@@ -54,6 +65,18 @@ Create a folder and navigate inside:
 ```bash
   cd frontend
 ```
+
+- click here to create your firebasse account: https://firebase.google.com
+- Create a file .env: 
+```bash
+  touch .env 
+```
+-In the file .env Add firebase key 
+
+```bash
+  cat >  VITE_FIREBASE_API_KEY = "Your firebase key"
+```
+
 - Install dependencies:
 
 ```bash
