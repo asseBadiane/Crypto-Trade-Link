@@ -4,7 +4,7 @@ function Home() {
   return (
     <>
       <div
-        className="relative overflow-hidden rounded-lg bg-cover bg-no-repeat p-12 text-center bg-gray-700 bg-blend-multiply"
+        className="relative overflow-hidden bg-cover bg-no-repeat p-12 text-center bg-gray-700 bg-blend-multiply"
         style={{
           backgroundImage:
             "url('https://miro.medium.com/v2/resize:fit:1024/1*VqKuTe9DmMZZRT0ERH2t4Q.jpeg')",
