@@ -1,5 +1,5 @@
 import { Spinner } from "@material-tailwind/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import {
   getDownloadURL,
@@ -8,20 +8,59 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserError,
+} from "../redux/user/userSlice";
 
 function Profile() {
-  const { currentUser } = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(false);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
+  // const [loading, setLoading] = useState(false);
 
   const fileRef = useRef(null);
   const [file, setFile] = useState(undefined);
   const [filePercent, setFilePercent] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
-
+  const dispatch = useDispatch();
+  const [successfullyUpdated, setSuccessfullyUpdated] = useState(false);
   console.log(formData);
-  console.log(filePercent);
-  console.log(fileUploadError);
+
+  // console.log(formData);
+  // console.log(filePercent);
+  // console.log(fileUploadError);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+    console.log(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success == false) {
+        dispatch(updateUserError(data.message));
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+      setSuccessfullyUpdated(true);
+    } catch (error) {
+      dispatch(updateUserError(error.message));
+    }
+  };
 
   useEffect(() => {
     if (file) {
@@ -70,7 +109,9 @@ function Profile() {
         <div className="p-3 max-w-lg mx-auto ">
           <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
 
-          <form className="flex flex-col gap-4">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4 text-black">
             <input
               type="file"
               ref={fileRef}
@@ -105,27 +146,39 @@ function Profile() {
             </p>
             <input
               type="text"
-              placeholder="username"
+              name="username"
+              placeholder="Username"
               id="username"
               className="border p-3 rounded-lg "
+              defaultValue={formData.username}
+              onChange={handleChange}
             />
             <input
               type="email"
-              placeholder="email"
+              name="email"
               id="email"
               className="border p-3 rounded-lg "
+              defaultValue={currentUser.email}
+              onChange={handleChange}
             />
             <input
               type="password"
-              placeholder="password"
+              name="password"
               id="password"
               className="border p-3 rounded-lg "
+              defaultValue={currentUser.password}
+              onChange={handleChange}
             />
-            <select className="border p-3 rounded-lg text-black" id="role">
-              <option className="border p-3 rounded-lg " value="seller">
+            <select
+              className="border p-3 rounded-lg text-black"
+              id="role"
+              name="role"
+              defaultValue={currentUser.role}
+              onChange={handleChange}>
+              <option className="border p-3 rounded-lg " value="trader">
                 Seller
               </option>
-              <option className="border p-3 rounded-lg " value="buyer">
+              <option className="border p-3 rounded-lg " value="user">
                 Buyer
               </option>
             </select>
@@ -151,6 +204,10 @@ function Profile() {
             </span>
           </div>
         </div>
+        <p className="text-red-700 mt-5"> {error ? error : ""} </p>
+        <p className="text-green-700 mt-5">
+          {successfullyUpdated ? "User updated successfully !" : ""}
+        </p>
       </div>
     </>
   );
