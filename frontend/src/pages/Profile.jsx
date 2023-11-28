@@ -12,11 +12,15 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserError,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserError,
 } from "../redux/user/userSlice";
+import Logo from "../assets/logo.png";
 
 function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
-  // const [loading, setLoading] = useState(false);
+  const [deleteUserStatus, setDeleteUserStatus] = useState(false);
 
   const fileRef = useRef(null);
   const [file, setFile] = useState(undefined);
@@ -27,9 +31,25 @@ function Profile() {
   const [successfullyUpdated, setSuccessfullyUpdated] = useState(false);
   console.log(formData);
 
-  // console.log(formData);
-  // console.log(filePercent);
-  // console.log(fileUploadError);
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (data.success == false) {
+        dispatch(deleteUserError(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserError(error.message));
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -108,6 +128,10 @@ function Profile() {
         }}>
         <div className="p-3 max-w-lg mx-auto ">
           <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
+          {/* <p className="text-red-700 mt-5"> {error ? error : ""} </p>
+          <p className="bg-green-600 text-slate-200 mt-5 p-2 border rounded-lg">
+            {successfullyUpdated ? "User updated successfully !" : ""} 
+          </p> */}
 
           <form
             onSubmit={handleSubmit}
@@ -150,7 +174,7 @@ function Profile() {
               placeholder="Username"
               id="username"
               className="border p-3 rounded-lg "
-              defaultValue={formData.username}
+              defaultValue={currentUser.username}
               onChange={handleChange}
             />
             <input
@@ -166,6 +190,7 @@ function Profile() {
               name="password"
               id="password"
               className="border p-3 rounded-lg "
+              placeholder="password"
               defaultValue={currentUser.password}
               onChange={handleChange}
             />
@@ -196,19 +221,78 @@ function Profile() {
             </button>
           </form>
           <div className="flex justify-between mt-5 ">
-            <span className="bg-slate-950 text-red-500 p-2 rounded-lg cursor-pointer">
+            {deleteUserStatus ? (
+              ""
+            ) : (
+              <span
+                onClick={() => setDeleteUserStatus(true)}
+                className="bg-slate-950 text-red-500 p-2 rounded-lg cursor-pointer">
+                Delete Account
+              </span>
+            )}
+            {/* <span className="bg-slate-950 text-red-500 p-2 rounded-lg cursor-pointer">
               Delete Account
-            </span>
+            </span> */}
             <span className="bg-slate-950 text-red-500 p-2 rounded-lg cursor-pointer">
               Sign out Account
             </span>
           </div>
         </div>
-        <p className="text-red-700 mt-5"> {error ? error : ""} </p>
-        <p className="text-green-700 mt-5">
-          {successfullyUpdated ? "User updated successfully !" : ""}
-        </p>
       </div>
+
+      {deleteUserStatus ? (
+        <div
+          id="marketing-banner"
+          tabindex="-1"
+          class="fixed z-70 flex flex-col md:flex-row justify-between w-[calc(100%-2rem)] p-2 -translate-x-1/2 bg-slate-200 border border-gray-100 rounded-lg shadow-sm lg:max-w-7xl left-1/2 top-6 dark:bg-gray-700 dark:border-gray-600">
+          <div class="flex flex-col items-start mb-3 me-4 md:items-center md:flex-row md:mb-0">
+            <a
+              href="#"
+              class="h-16 flex items-center mb-2 border-gray-200 md:pe-4 md:me-4 md:border-e md:mb-0 dark:border-gray-600">
+              <img src={Logo} class=" mt-2" alt="Flowbite Logo" width={80} />
+              <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
+                Crypto Trade Link
+              </span>
+            </a>
+            <p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
+              Once you delete your account, all your data will be lost. This
+              action cannot be undone.
+            </p>
+          </div>
+          <div class="flex items-center flex-shrink-0">
+            <button
+              onClick={() => handleDeleteUser()}
+              type="button"
+              href="#"
+              class="px-5 py-2 me-2 text-xs font-medium text-white bg-red-700 rounded-lg hover:bg-red-900 focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-blue-800">
+              Delete Account
+            </button>
+            <button
+              onClick={() => setDeleteUserStatus(false)}
+              data-dismiss-target="#marketing-banner"
+              type="button"
+              class="flex-shrink-0 inline-flex justify-center w-7 h-7 items-center text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 dark:hover:bg-gray-600 dark:hover:text-white">
+              <svg
+                class="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14">
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+              <span class="sr-only">Close banner</span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </>
   );
 }
