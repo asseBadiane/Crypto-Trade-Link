@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
 import { errorHandler } from "../utils/error.js";
 
-export const signup = async (req, res, next) => {
+export const signUp = async (req, res, next) => {
   try {
     // get input data
     const { username, email, password, role, avatar } = req.body;
@@ -60,7 +60,7 @@ export const signup = async (req, res, next) => {
   }
 };
 
-export const signin = async (req, res, next) => {
+export const signIn = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const validUser = await User.findOne({ email });
@@ -76,7 +76,17 @@ export const signin = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}; 
+
+export const signOut = async (req, res, next) => {
+  try{
+      res.clearCookie('access_token')
+      res.status(200).json("User signed out successfully!")
+
+  } catch (error) {
+      next(error)
+  }
+}
 
 export const google = async (req, res, next) => {
   try {

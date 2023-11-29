@@ -1,6 +1,7 @@
 import { Spinner } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -8,13 +9,17 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+
 import {
   updateUserStart,
   updateUserSuccess,
-  updateUserError,
+  updateUserFailure,
   deleteUserStart,
   deleteUserSuccess,
-  deleteUserError,
+  deleteUserFailure,
+  signOutSuccess,
+  signOutFailure,
+  signOutStart,
 } from "../redux/user/userSlice";
 import Logo from "../assets/logo.png";
 
@@ -29,7 +34,24 @@ function Profile() {
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
   const [successfullyUpdated, setSuccessfullyUpdated] = useState(false);
+  const navigate = useNavigate();
   console.log(formData);
+
+  const handleSignoutUser = async () => {
+    try {
+      dispatch(signOutStart());
+      const res = await fetch("api/auth/signout");
+      const data = await res.json();
+      if (data.success == false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+      navigate("/");
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
 
   const handleDeleteUser = async () => {
     try {
@@ -42,12 +64,12 @@ function Profile() {
       });
       const data = await res.json();
       if (data.success == false) {
-        dispatch(deleteUserError(data.message));
+        dispatch(deleteUserFailure(data.message));
         return;
       }
       dispatch(deleteUserSuccess(data));
     } catch (error) {
-      dispatch(deleteUserError(error.message));
+      dispatch(deleteUserFailure(error.message));
     }
   };
 
@@ -72,13 +94,13 @@ function Profile() {
       });
       const data = await res.json();
       if (data.success == false) {
-        dispatch(updateUserError(data.message));
+        dispatch(updateUserFailure(data.message));
         return;
       }
       dispatch(updateUserSuccess(data));
       setSuccessfullyUpdated(true);
     } catch (error) {
-      dispatch(updateUserError(error.message));
+      dispatch(updateUserFailure(error.message));
     }
   };
 
@@ -114,11 +136,27 @@ function Profile() {
       }
     );
   };
-
   //   allow read;
   //   allow write: if
   //   request.resource.size < 2 * 1024 * 1024 &&
   //   request.resource.contentType.matches("image/.*")
+
+  // const handleSignOutUser = async () => {
+  //   try {
+  //     dispatch(signOutStart());
+  //     const res = await fetch("/api/auth/signout");
+  //     const data = await res.json();
+  //     if (data.success == false) {
+  //       dispatch(deleteUserFailure(data.message));
+  //       return;
+  //     }
+  //     dispatch(deleteUserSuccess(data));
+  //     navigate("/");
+  //   } catch (error) {
+  //     dispatch(deleteUserFailure(error.message));
+  //   }
+  // };
+
   return (
     <>
       <div
@@ -221,21 +259,25 @@ function Profile() {
             </button>
           </form>
           <div className="flex justify-between mt-5 ">
-            {deleteUserStatus ? (
-              ""
-            ) : (
+            <div>
+              {deleteUserStatus ? (
+                ""
+              ) : (
+                <span
+                  onClick={() => setDeleteUserStatus(true)}
+                  className="bg-slate-950 text-red-500 p-2 rounded-lg cursor-pointer">
+                  Delete Account
+                </span>
+              )}
+            </div>
+
+            <div>
               <span
-                onClick={() => setDeleteUserStatus(true)}
+                onClick={() => handleSignoutUser()}
                 className="bg-slate-950 text-red-500 p-2 rounded-lg cursor-pointer">
-                Delete Account
+                Sign out Account
               </span>
-            )}
-            {/* <span className="bg-slate-950 text-red-500 p-2 rounded-lg cursor-pointer">
-              Delete Account
-            </span> */}
-            <span className="bg-slate-950 text-red-500 p-2 rounded-lg cursor-pointer">
-              Sign out Account
-            </span>
+            </div>
           </div>
         </div>
       </div>
