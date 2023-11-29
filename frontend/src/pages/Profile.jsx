@@ -35,7 +35,9 @@ function Profile() {
   const dispatch = useDispatch();
   const [successfullyUpdated, setSuccessfullyUpdated] = useState(false);
   const navigate = useNavigate();
+  const [updateUserStatus, setUpdateUserStatus] = useState(false);
   console.log(formData);
+  console.log(error);
 
   const handleSignoutUser = async () => {
     try {
@@ -141,22 +143,6 @@ function Profile() {
   //   request.resource.size < 2 * 1024 * 1024 &&
   //   request.resource.contentType.matches("image/.*")
 
-  // const handleSignOutUser = async () => {
-  //   try {
-  //     dispatch(signOutStart());
-  //     const res = await fetch("/api/auth/signout");
-  //     const data = await res.json();
-  //     if (data.success == false) {
-  //       dispatch(deleteUserFailure(data.message));
-  //       return;
-  //     }
-  //     dispatch(deleteUserSuccess(data));
-  //     navigate("/");
-  //   } catch (error) {
-  //     dispatch(deleteUserFailure(error.message));
-  //   }
-  // };
-
   return (
     <>
       <div
@@ -166,10 +152,9 @@ function Profile() {
         }}>
         <div className="p-3 max-w-lg mx-auto ">
           <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
-          {/* <p className="text-red-700 mt-5"> {error ? error : ""} </p>
-          <p className="bg-green-600 text-slate-200 mt-5 p-2 border rounded-lg">
-            {successfullyUpdated ? "User updated successfully !" : ""} 
-          </p> */}
+          <p className="text-green-500 font-bold text-center mt-5 p-2 ">
+            {successfullyUpdated ? "User updated successfully !" : ""}
+          </p>
 
           <form
             onSubmit={handleSubmit}
@@ -190,7 +175,7 @@ function Profile() {
             />
             <p>
               {fileUploadError ? (
-                <span className="text-red-700">
+                <span className="text-red-700 font-medium pt-3 text-center">
                   Error uploading file (image must be less than 2mb){" "}
                 </span>
               ) : filePercent > 0 && filePercent < 100 ? (
@@ -199,14 +184,20 @@ function Profile() {
                   {`progressing...${filePercent}%`}
                 </span>
               ) : filePercent === 100 ? (
-                <span className="text-green-400">
+                <span className="text-center font-medium text-green-500 pt-3">
                   Image successfully uploaded
                 </span>
               ) : (
                 ""
               )}
             </p>
+            {error && (
+              <p className="text-center font-medium text-red-700 pt-3">
+                {error}
+              </p>
+            )}
             <input
+              required
               type="text"
               name="username"
               placeholder="Username"
@@ -216,6 +207,7 @@ function Profile() {
               onChange={handleChange}
             />
             <input
+              required
               type="email"
               name="email"
               id="email"
@@ -224,6 +216,7 @@ function Profile() {
               onChange={handleChange}
             />
             <input
+              required
               type="password"
               name="password"
               id="password"
@@ -281,6 +274,43 @@ function Profile() {
           </div>
         </div>
       </div>
+
+      {/* {error && (
+        <div
+          id="marketing-banner"
+          tabindex="-1"
+          class="fixed z-70 flex flex-col md:flex-row justify-between w-[calc(100%-2rem)] p-2 -translate-x-1/2 bg-slate-200 border border-gray-100 rounded-lg shadow-sm lg:max-w-7xl left-1/2 top-6 dark:bg-gray-700 dark:border-gray-600">
+          <div class="flex flex-col items-center mb-3 me-4 md:items-center md:flex-row md:mb-0">
+            <p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
+              {error}
+            </p>
+          </div>
+          <div class="flex items-center flex-shrink-0">
+            <button
+              onClick={() => dispatch(ClearError())}
+              aria-label="Close"
+              data-dismiss-target="#marketing-banner"
+              type="button"
+              class="flex-shrink-0 inline-flex justify-center w-7 h-7 items-center text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 dark:hover:bg-gray-600 dark:hover:text-white">
+              <svg
+                class="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14">
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+              <span class="sr-only">Close banner</span>
+            </button>
+          </div>
+        </div>
+      )} */}
 
       {deleteUserStatus ? (
         <div
