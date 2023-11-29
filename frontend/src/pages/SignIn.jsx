@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   signInStart,
   signInSuccess,
-  signInError,
+  signInFailure,
 } from "../redux/user/userSlice.js";
 import OAuth from "./OAuth.jsx";
 import Logo from "../assets/logo.png";
@@ -16,6 +16,7 @@ function SignIn() {
   const { loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -36,14 +37,14 @@ function SignIn() {
       });
       const data = await res.json();
       if (data.success == false) {
-        dispatch(signInError(data.message));
+        dispatch(signInFailure(data.message));
         return;
       }
       dispatch(signInSuccess(data));
       navigate("/");
       // console.log(data);
     } catch (error) {
-      dispatch(signInError(error));
+      dispatch(signInFailure(error));
       console.log(error);
     }
   };
@@ -87,31 +88,18 @@ function SignIn() {
                     />
 
                     <div className="mb-12 pb-1 pt-1 text-center">
-                      {/* <button
-                        style={{
-                          background:
-                            "linear-gradient(to right, #706c0c, #181702, #706c0c )",
-                          justifyContent: "center",
-                        }}
-                        className="bg-slate-700 text-white w-full p-2 rounded-lg text-center uppercase hover:opacity-95 disabled:opacity-95">
-                        <p
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            size: "100%",
-                          }}>
-                          {" "}
-                          {loading ? <Spinner /> : "Sign In"}
-                        </p>
-                      </button> */}
-                      <button className="bg-slate-950  text-white w-full mt-3 p-2 rounded-lg text-center uppercase hover:bg-slate-800 ">
+                      <button
+                        className="bg-slate-950 text-white w-full mt-3 p-2 rounded-lg text-center uppercase hover:bg-slate-800"
+                        disabled={loading}
+                        type="submit" // Make sure to include the type attribute for the submit button
+                      >
                         {loading ? (
-                          <p className="flex justify-center items-center gap-2 cursor-wait">
+                          <div className="flex justify-center items-center gap-2 cursor-wait">
                             <Spinner />
                             <span className="text-slate-200 lowercase">
                               Processing...
                             </span>
-                          </p>
+                          </div>
                         ) : (
                           "Sign In"
                         )}
