@@ -64,7 +64,11 @@ function SignIn() {
                       We Are The Sllers of Bitcoin
                     </h4>
                   </div>
-
+                  {error && (
+                    <p className="text-center font-medium text-red-700 pt-5">
+                      {error}
+                    </p>
+                  )}
                   <form
                     className="gap-4 p-5 text-white"
                     onSubmit={handleSubmit}>
@@ -113,8 +117,6 @@ function SignIn() {
 
                     <div className="flex items-center justify-between pb-6">
                       <p className="mb-0 mr-2">Have an account?</p>
-                      {error && <p className="text-red-500 pt-5">{error}</p>}
-
                       <Link
                         to="/sign-up"
                         style={{

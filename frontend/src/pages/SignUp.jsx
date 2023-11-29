@@ -61,7 +61,11 @@ function SignUp() {
                       We Are The Sllers of Bitcoin
                     </h4>
                   </div>
-
+                  {error && (
+                    <p className="text-center font-medium text-red-700 pt-5">
+                      {error}
+                    </p>
+                  )}
                   <form
                     className="gap-4 text-white p-5"
                     onSubmit={handleSubmit}>
@@ -104,23 +108,7 @@ function SignUp() {
                       className="mb-4 rounded-lg p-2 w-full text-black"
                       onChange={handleChange}
                     />
-
                     <div className="mb-12 pb-1 pt-1 text-center">
-                      {/* <button
-                        style={{
-                          background:
-                            "linear-gradient(to right, #706c0c, #181702, #706c0c )",
-                        }}
-                        className="bg-slate-700 text-white w-full p-2 rounded-lg  uppercase hover:opacity-95 disabled:opacity-95">
-                        <p
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            size: "100%",
-                          }}>
-                          {loading ? <Spinner /> : "Sign Up"}
-                        </p>
-                      </button> */}
                       <button className="bg-slate-950  text-white w-full mt-3 p-2 rounded-lg text-center uppercase hover:bg-slate-800 ">
                         {loading ? (
                           <p className="flex justify-center items-center gap-2 cursor-wait">
@@ -141,7 +129,6 @@ function SignUp() {
 
                     <div className="flex items-center justify-between pb-6">
                       <p className="mb-0 mr-2 px-8">Have an account?</p>
-                      {error && <p className="text-red-500 pt-5">{error}</p>}
 
                       <Link
                         to="/sign-in"
