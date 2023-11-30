@@ -1,7 +1,7 @@
 import { Spinner } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -272,45 +272,19 @@ function Profile() {
               </span>
             </div>
           </div>
+          <div className="text-center p-4 m-8 max-w-lg mx-auto">
+            <Link
+              to="/create-trader"
+              style={{
+                background: "linear-gradient(to right, #706c0c, #181702 )",
+              }}
+              type="button"
+              className="w-full rounded-lg text-center p-2 text-m font-medium uppercase text-slate-100 hover:bg-slate-900 ">
+              Complete your profile seller
+            </Link>
+          </div>
         </div>
       </div>
-
-      {/* {error && (
-        <div
-          id="marketing-banner"
-          tabindex="-1"
-          class="fixed z-70 flex flex-col md:flex-row justify-between w-[calc(100%-2rem)] p-2 -translate-x-1/2 bg-slate-200 border border-gray-100 rounded-lg shadow-sm lg:max-w-7xl left-1/2 top-6 dark:bg-gray-700 dark:border-gray-600">
-          <div class="flex flex-col items-center mb-3 me-4 md:items-center md:flex-row md:mb-0">
-            <p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
-              {error}
-            </p>
-          </div>
-          <div class="flex items-center flex-shrink-0">
-            <button
-              onClick={() => dispatch(ClearError())}
-              aria-label="Close"
-              data-dismiss-target="#marketing-banner"
-              type="button"
-              class="flex-shrink-0 inline-flex justify-center w-7 h-7 items-center text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 dark:hover:bg-gray-600 dark:hover:text-white">
-              <svg
-                class="w-3 h-3"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14">
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                />
-              </svg>
-              <span class="sr-only">Close banner</span>
-            </button>
-          </div>
-        </div>
-      )} */}
 
       {deleteUserStatus ? (
         <div
@@ -320,13 +294,21 @@ function Profile() {
           <div class="flex flex-col items-start mb-3 me-4 md:items-center md:flex-row md:mb-0">
             <a
               href="#"
-              class="h-16 flex items-center mb-2 border-gray-200 md:pe-4 md:me-4 md:border-e md:mb-0 dark:border-gray-600">
+              class="h-16 text-red-900 flex items-center mb-2 border-red-900 md:pe-4 md:me-4  md:mb-0 dark:border-red-900">
               <img src={Logo} class=" mt-2" alt="Flowbite Logo" width={80} />
               <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
                 Crypto Trade Link
               </span>
+              <svg
+                class="flex-shrink-0 w-4 h-4 "
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+              </svg>
             </a>
-            <p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
+            <p class="flex items-center text-sm font-medium text-red-900 dark:text-red-900">
               Once you delete your account, all your data will be lost. This
               action cannot be undone.
             </p>
@@ -343,7 +325,7 @@ function Profile() {
               onClick={() => setDeleteUserStatus(false)}
               data-dismiss-target="#marketing-banner"
               type="button"
-              class="flex-shrink-0 inline-flex justify-center w-7 h-7 items-center text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 dark:hover:bg-gray-600 dark:hover:text-white">
+              class="flex-shrink-0 inline-flex justify-center w-7 h-7 items-center text-gray-400 hover:bg-red-900 hover:text-red-200 rounded-lg text-sm p-1.5 dark:hover:bg-red-900 dark:hover:text-white">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
