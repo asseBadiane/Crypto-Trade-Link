@@ -6,8 +6,8 @@ import OAuth from "./pages/OAuth";
 import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import CreateOffer from "./pages/CreateOffer";
-import UpdateOffer from "./pages/UpdateOffer";
+import CreateTrader from "./pages/CreateTrader";
+import UpdateTrader from "./pages/UpdateTrader";
 import Footer from "./components/FooterComponent";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
@@ -26,8 +26,8 @@ function App() {
           <Route path="/traders" element={<Traders />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/create-offer" element={<CreateOffer />} />
-          <Route path="/update-offer" element={<UpdateOffer />} />
+          <Route path="/create-trader" element={<CreateTrader />} />
+          <Route path="/update-trader/:id" element={<UpdateTrader />} />
           <Route path="/trader" element={<Trader />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
