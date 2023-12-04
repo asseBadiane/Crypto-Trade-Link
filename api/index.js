@@ -5,8 +5,9 @@ dotenv.config();
 import path from "path";
 import cookieParser from "cookie-parser";
 
-import user from "./routes /user.route.js";
-import auth from "./routes /auth.route.js";
+import userRouter from "./routes /user.route.js";
+import authRouter from "./routes /auth.route.js";
+import traderRouter from "./routes /trader.route.js";
 
 mongoose
   .connect(process.env.MONGO, {
@@ -24,8 +25,9 @@ app.listen("3000", () => {
   console.log("Server running on port 3000");
 });
 
-app.use("/api/user", user);
-app.use("/api/auth", auth);
+app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/trader", traderRouter);
 
 const _dirname = path.resolve();
 app.use(express.static(path.join(_dirname, "frontend/dist")));

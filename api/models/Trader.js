@@ -33,22 +33,38 @@ const traderSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    // phoneNumber: {
+    //     type: Number,
+    //     required: true,
+    //     min: 0,
+    //     max: 14,
+    //     unique: true,
+    //     default: 221778543652n,
+    // },
+    // nationalIdentityNumber: {
+    //     type: Number,
+    //     required: true,
+    //     min: 0,
+    //     max: 20,
+    //     unique: true,
+    //     default: 12345678901234567890n,
+
+    // },
     phoneNumber: {
         type: Number,
         required: true,
-        min: 12,
-        max: 14,
+        min: 0,
+        max: 99999999999999,
         unique: true,
-        default: "221778543652",
+        default: 221778543652,
     },
     nationalIdentityNumber: {
         type: Number,
         required: true,
-        min: 12,
-        max: 20,
+        min: 0,
+        max: 99999999999999999999,
         unique: true,
-        default: "12345678901234567890",
-
+        default: 1783456901267890,
     },
     picture: {
         type: String,
