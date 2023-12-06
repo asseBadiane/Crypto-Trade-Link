@@ -54,7 +54,7 @@ function SignIn() {
     <section className="h-full bg-neutral-200 dark:bg-neutral-500 ">
       <div className="flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
         <div className="w-full">
-          <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
+          <div className="block rounded-lg bg-slate-100 shadow-lg dark:bg-neutral-800">
             <div className="g-0 lg:flex lg:flex-wrap">
               <div className="px-8 md:px-0 lg:w-6/12">
                 <div className="md:mx-6 md:p-12">
@@ -70,8 +70,10 @@ function SignIn() {
                     </p>
                   )}
                   <form
-                    className="gap-4 p-5 text-white"
-                    onSubmit={handleSubmit}>
+                    className="gap-4 p-5 text-black"
+                    method="POST"
+                    onSubmit={handleSubmit}
+                  >
                     <p className="mb-4 ">Please connect your account</p>
 
                     <input
@@ -124,7 +126,8 @@ function SignIn() {
                             "linear-gradient(to right, #706c0c, #181702 )",
                         }}
                         type="Link"
-                        className=" rounded-lg px-6 p-1 pt-2 text-m font-medium uppercase text-slate-100">
+                        className=" rounded-lg px-6 p-1 pt-2 text-m font-medium uppercase text-slate-100"
+                      >
                         Sign Up
                       </Link>
                     </div>
@@ -137,7 +140,8 @@ function SignIn() {
                 style={{
                   background:
                     "linear-gradient(to right, #181702, #706c0c, #706c0c, #181702 )",
-                }}>
+                }}
+              >
                 <div className="px-4 py-6 text-white md:mx-6 md:p-12">
                   <h4 className="mb-6 text-xl font-semibold">
                     We are more than just a networking platform
