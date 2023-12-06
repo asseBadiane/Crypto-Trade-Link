@@ -33,23 +33,6 @@ const traderSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    // phoneNumber: {
-    //     type: Number,
-    //     required: true,
-    //     min: 0,
-    //     max: 14,
-    //     unique: true,
-    //     default: 221778543652n,
-    // },
-    // nationalIdentityNumber: {
-    //     type: Number,
-    //     required: true,
-    //     min: 0,
-    //     max: 20,
-    //     unique: true,
-    //     default: 12345678901234567890n,
-
-    // },
     phoneNumber: {
         type: Number,
         required: true,
@@ -84,7 +67,15 @@ const traderSchema = mongoose.Schema({
     bankAccountInfos: {
         type: String,
         required: true,
-    },  
+    },
+    imageUrls: {
+        type: Array,
+        required: true,
+    }
+}, 
+{
+    timestamps: true
+  
 })
 
 export default mongoose.model("Trader", traderSchema)

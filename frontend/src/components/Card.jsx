@@ -1,10 +1,8 @@
-// import { Card } from "flowbite-react";
-import { Card, Dropdown, DropdownItem } from "flowbite-react";
 
 function CardComponent() {
   return (
     <>
-      <div className="grid md:grid-cols-4 items-center justify-center mb-4">
+      <div className="grid md:grid-cols-4 items-center justify-center mb-4 bg-slate-100">
         <div className="best-sellers mb-4 mr-8 m-4 p-4">
           <div className="flex flex-wrap items-center justify-between mb-4">
             <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white">

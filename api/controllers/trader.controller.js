@@ -1,5 +1,5 @@
-import Trader from "../models/Trader.js";
-import User from "../models/User.js";
+import Trader from "../models/Trader.model.js";
+import User from "../models/User.model.js";
 import { errorHandler } from "../utils/error.js";
 
 export const createTrader = async (req, res, next) => {
@@ -18,6 +18,7 @@ export const createTrader = async (req, res, next) => {
       levelExperience,
       sourceOfIncome,
       bankAccountInfos,
+      imageUrls
     } = req.body;
 
     // Vérify if trader already exists in database
@@ -47,6 +48,7 @@ export const createTrader = async (req, res, next) => {
       levelExperience,
       sourceOfIncome,
       bankAccountInfos,
+      imageUrls
     });
 
     // Enregistrer le nouveau trader dans la base de données
