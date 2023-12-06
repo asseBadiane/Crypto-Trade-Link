@@ -1,6 +1,84 @@
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { useState } from "react";
+import { app } from "../firebase";
+
 import Logo from "../assets/logo.png";
+import { Spinner } from "@material-tailwind/react";
 
 function CreateTrader() {
+  const [files, setFiles] = useState([]);
+  const [formData, setFormData] = useState({
+    imageUrls: [],
+  });
+  const [imageUploadError, setImageUplodError] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  console.log(formData);
+
+  const handleImageSubmit = () => {
+    if (files.length > 0 && files.length + formData.imageUrls.length < 3) {
+      setUploading(true);
+      setImageUplodError(false);
+      const promises = [];
+
+      for (let i = 0; i < files.length; i++) {
+        promises.push(storeImage(files[i]));
+      }
+      Promise.all(promises)
+        .then((urls) => {
+          setFormData({
+            ...formData,
+            imageUrls: formData.imageUrls.concat(urls),
+          });
+          setImageUplodError(false);
+          setUploading(false);
+        })
+        .catch((error) => {
+          setImageUplodError("Image upload failed (to nb max per image)");
+          setUploading(false);
+        });
+    } else {
+      setImageUplodError("You can only upload 3 images per listing");
+      setUploading(false);
+    }
+  };
+
+  const storeImage = async (file) => {
+    return new Promise((resolve, reject) => {
+      const storage = getStorage(app);
+      const fileName = new Date().getTime() + file.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload is ${progress}% done`);
+        },
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
+          });
+        }
+      );
+    });
+  };
+
+  const handleRemoveImage = (index) => {
+    setFormData({
+      ...formData,
+      imageUrls: formData.imageUrls.filter((_, i) => i !== index),
+    });
+  };
+
   return (
     <section className="h-full bg-neutral-200 dark:bg-neutral-700">
       <div className="g-6 flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
@@ -73,18 +151,66 @@ function CreateTrader() {
                           <p className="font-semibold">
                             Images:
                             <span className="font-medium text-green-700 ">
-                              The first image will be the cover (max 6)
+                              The first image will be the cover (max 3)
                             </span>
                           </p>
                           <div className="flex gap-2">
                             <input
+                              onChange={(e) => setFiles(Array.from(e.target.files))}
                               className="p-3 border border-gray-300 rounded-lg w-full "
                               type="file"
                               id="images"
                               accept="image/*"
                               multiple
                             />
+                            <button
+                              disabled={uploading}
+                              onClick={handleImageSubmit}
+                              type="button"
+                              className="p-3 text-slate-100 rounded uppercase hover:shadow-lg disabled:opacity-80 "   
+                              style={{
+                                background: "linear-gradient(to right, #706c0c, #181702 )",
+                              }}
+                            >
+                               {uploading ? (
+                          <p className="flex justify-center items-center gap-2 cursor-wait">
+                            <Spinner />
+                            <span className="text-slate-200 lowercase">
+                            Uploading...
+                            </span>
+                          </p>
+                        ) : (
+                          "Upload"
+                        )}
+                              
+                            </button>
+                            
                           </div>
+                          <p className="text-red-700 text-sm font-medium ">
+                              {imageUploadError && imageUploadError}
+                            </p>
+                            {formData.imageUrls.length > 0 &&
+                            formData.imageUrls.map((url, index) => {
+                              console.log("Image URL at index", index, ":", url);
+                            return (
+                              
+                              <div
+                                className="flex justify-between p-3 border item-center"
+                                key={`image-${index}`}
+                              >
+                                <img
+                                  src={url}
+                                  alt="listing image"
+                                  className="w-20 h-20 object-contain rounded-lg "
+                                />
+                                <button
+                                  onClick={() => handleRemoveImage(index)}
+                                  className="p-3 text-red-700 rounded-lg uppercase hover:opacity-95"
+                                >
+                                  Delete
+                                </button>
+                              </div>
+                            )})}
                         </div>
                       </div>
                       <div className="flex flex-col flex-1 gap-4">
@@ -124,13 +250,16 @@ function CreateTrader() {
                             placeholder="Bank account infos"
                             required
                           />
+                         
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex flex-col flex-1 gap-4 items-center">
+                    <div className="flex flex-col flex-1 gap-4 items-center m-6">
                       <button
-                        className="p-3 m-2 px-24 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80 mx-auto"
+                        className="p-3 m-2 px-24 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80 mx-auto transition-all duration-300 ease-in-out "
+                        // disabled={loading}
+                        type="submit"
                         style={{
                           background:
                             "linear-gradient(to right, #181702, #706c0c, #706c0c, #181702 )",
