@@ -28,7 +28,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/create-trader" element={<CreateTrader />} />
           <Route path="/update-trader/:id" element={<UpdateTrader />} />
-          <Route path="/trader" element={<Trader />} />
+          <Route path="/trader/:id" element={<Trader />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
