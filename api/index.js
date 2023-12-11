@@ -5,9 +5,9 @@ dotenv.config();
 import path from "path";
 import cookieParser from "cookie-parser";
 
-import userRouter from "./routes /user.route.js";
-import authRouter from "./routes /auth.route.js";
-import traderRouter from "./routes /trader.route.js";
+import userRouter from "./routes/user.route.js";
+import authRouter from "./routes/auth.route.js";
+import traderRouter from "./routes/trader.route.js";
 
 mongoose
   .connect(process.env.MONGO, {

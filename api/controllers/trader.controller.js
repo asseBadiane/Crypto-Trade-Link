@@ -101,3 +101,14 @@ export const updateTrader = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getTrader = async (req, res, next) => {
+  try {
+    const trader = await Trader.findById(req.params.id);
+  if (!trader) return next(errorHandler(404, "Trader not found!"));
+  res.status(200).json(trader);
+  } catch (error) {
+    next(error);
+  }
+  
+};
