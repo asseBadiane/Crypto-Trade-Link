@@ -105,10 +105,25 @@ export const updateTrader = async (req, res, next) => {
 export const getTrader = async (req, res, next) => {
   try {
     const trader = await Trader.findById(req.params.id);
-  if (!trader) return next(errorHandler(404, "Trader not found!"));
-  res.status(200).json(trader);
+    if (!trader) return next(errorHandler(404, "Trader not found!"));
+    res.status(200).json(trader);
   } catch (error) {
     next(error);
   }
-  
 };
+
+export const deleteTrader = async (req, res, next) => {
+  const trader = await Trader.findById(req.params.id);
+  if (!trader) return next(errorHandler(404, "Trader not found!"));
+  if (req.user && req.user.email !== trader.email)
+    return next(errorHandler(401, "You can delete only your own Trader!"));
+  try {
+    await Trader.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      success: true,
+      message: "Trader deleted successfully ✅",
+    });
+  } catch (error) {
+    next(error);
+  }
+}
