@@ -13,8 +13,10 @@ import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import Trader from "./pages/Trader";
 import Traders from "./pages/Traders";
+// import { useSelector } from "react-redux";
 
 function App() {
+  // const { currentUser } = useSelector((state) => state.user);
   return (
     <>
       <BrowserRouter>
@@ -26,11 +28,11 @@ function App() {
           <Route path="/traders" element={<Traders />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/create-trader" element={<CreateTrader />} />
-          <Route path="/update-trader/:id" element={<UpdateTrader />} />
-          <Route path="/trader/:id" element={<Trader />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
+            <Route path="/update-trader/:traderId" element={<UpdateTrader />} />
+            <Route path="/create-trader" element={<CreateTrader />} />
+            <Route path="/trader/:traderId" element={<Trader />} />
           </Route>
         </Routes>
         <Footer />
